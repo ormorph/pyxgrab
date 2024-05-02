@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+# Distributed under dual license GPL-2 and GPL-3
+# You can choose any of these licenses.
+
+import os
+
+dir = os.path.dirname(__file__)
+if os.path.isfile(os.path.abspath(os.path.join(dir, '../share/pyxgrab/pyxgrab.py'))):
+    os.chdir(os.path.abspath(os.path.join(dir, '../share/pyxgrab/')))
+    os.system('./pyxgrab.py')
+elif  os.path.isfile(os.path.abspath(os.path.join(dir, '../pyxgrab/pyxgrab.py'))):
+    os.chdir(os.path.abspath(os.path.join(dir, '../pyxgrab/')))
+    os.system('./pyxgrab.py')
+else:
+    print("Error: The file pyxgrab.py at the specified path does not exist!")
