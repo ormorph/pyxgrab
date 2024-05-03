@@ -15,7 +15,6 @@ class CaptureHandler(TQObject):
         self.connect(parent, PYSIGNAL('start()'), self.start)
         self.connect(parent, PYSIGNAL('stop()'), self.stop)
         self.progress = CompDialog()
-        self.connect(self.progress, PYSIGNAL('stopped()'), parent.slotStopped)
 
     def load_settings(self):
         self.config = SettingConf()

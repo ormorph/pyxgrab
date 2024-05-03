@@ -57,57 +57,41 @@ class SysTray(KSystemTray):
         if event.button() == TQt.LeftButton:
             self.emit(PYSIGNAL('clicked()'), ())
 
-    def slotClicked(self):
-        if self.iconStat:
-            self.icons = TQPixmap(os.path.join('./icons', 'start.png'))
-            self.setPixmap(self.icons)
-            self.start.setEnabled(True)
-            self.stop.setEnabled(False)
-            self.iconStat = False
-            self.emit(PYSIGNAL('stop()'), ())
-        else:
-            self.icons = TQPixmap(os.path.join('./icons', 'stop.png'))
-            self.setPixmap(self.icons)
-            self.start.setEnabled(False)
-            self.stop.setEnabled(True)
-            self.iconStat = True
-            self.emit(PYSIGNAL('start()'), ())
+    def stop_click_init(self):
+        self.icons = TQPixmap(os.path.join('./icons', 'start.png'))
+        self.setPixmap(self.icons)
+        self.start.setEnabled(True)
+        self.stop.setEnabled(False)
+        self.iconStat = False
 
-    def slotStart(self):
+    def start_click_init(self):
         self.icons = TQPixmap(os.path.join('./icons', 'stop.png'))
         self.setPixmap(self.icons)
         self.start.setEnabled(False)
         self.stop.setEnabled(True)
         self.iconStat = True
+
+    def slotClicked(self):
+        if self.iconStat:
+            self.stop_click_init()
+            self.emit(PYSIGNAL('stop()'), ())
+        else:
+            self.start_click_init()
+            self.emit(PYSIGNAL('start()'), ())
+
+    def slotStart(self):
+        self.start_click_init()
         self.emit(PYSIGNAL('start()'), ())
 
     def slotStop(self):
-        self.icons = TQPixmap(os.path.join('./icons', 'start.png'))
-        self.setPixmap(self.icons)
-        self.start.setEnabled(True)
-        self.stop.setEnabled(False)
-        self.iconStat = False
+        self.stop_click_init()
         self.emit(PYSIGNAL('stop()'), ())
-
-    def slotStopped(self):
-        self.icons = TQPixmap(os.path.join('./icons', 'start.png'))
-        self.setPixmap(self.icons)
-        self.start.setEnabled(True)
-        self.stop.setEnabled(False)
-        self.iconStat = False
 
     def getProc(self, x):
         self.proc = x
-        self.connect(self, PYSIGNAL('stopProc()'), self.stopProc)
+        self.connect(self, PYSIGNAL('stopProc()'), self.stop_click_init)
         thread = threading.Thread(target=self.procWait)
         thread.start()
-
-    def stopProc(self):
-        self.icons = TQPixmap(os.path.join('./icons', 'start.png'))
-        self.setPixmap(self.icons)
-        self.start.setEnabled(True)
-        self.stop.setEnabled(False)
-        self.iconStat = False
 
     def procWait(self):
         self.proc.wait()
