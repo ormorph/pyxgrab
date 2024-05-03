@@ -15,9 +15,9 @@ class SettingConf:
 
     def cerate_settings_file(self):
         self.config['capture'] = {'video': '-f x11grab -s $SCR_SIZE -r 10 -i $DISPLAY -vcodec mpeg4 -q:v 0',
-                            'sound': '-f pulse -i bluez_output.E7_50_5B_0B_9C_43.1.monitor -acodec pcm_s16le',
+                            'sound': '-f pulse -i alsa_input.pci-0000_00_1b.0.analog-stereo -acodec pcm_s16le',
                             'sound_check': 'yes',
-                            'capture': '1',
+                            'capture': '0',
                             'dir_path': str(Path.home()) + '/screenshot'}
         self.config['compress'] = {'video': '-acodec libmp3lame -ab 192k -ac 2 -vcodec libx264 -vf scale=TARGET_WIDTH:TARGET_HEIGHT',
                                    'compress_check': 'yes'}
