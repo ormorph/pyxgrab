@@ -14,6 +14,10 @@ import signal
 locale_dir = './locale/'
 tFile = 'pyxgrab_'
 
+description = b"This is a program for capturing video"
+version     = b"0.1"
+appName = b'PyXgrab'
+
 def get_translate(lang):
     global  locale_dir, tFile
     language = tFile + lang + ".qm"
@@ -22,8 +26,9 @@ def get_translate(lang):
     return translator
 
 if __name__ == "__main__":
-    appName = b'PyXgrab'
-    a = TDEApplication (sys.argv, appName)
+    aboutData = TDEAboutData (appName, appName, description, version, False)
+    TDECmdLineArgs.init (sys.argv, aboutData)
+    a = TDEApplication ()
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     TQObject.connect(a,TQ_SIGNAL("lastWindowClosed()"),a,TQ_SLOT("quit()"))
     lang = str(TQLocale(TQTextCodec.locale()).name())

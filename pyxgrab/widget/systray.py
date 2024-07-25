@@ -16,7 +16,6 @@ class SysTray(KSystemTray):
         self.iconStat = False
         # Create Menu
         self.menu = self.contextMenu()
-        self.menu.changeTitle(-2, "PyXgrab")
         self.start = TDEAction(self.__tr("Start"), TQIconSet(TQPixmap("./icons/start.png")))
         self.stop = TDEAction(self.__tr("Stop"))
         self.stop.setIconSet(TQIconSet(TQPixmap("./icons/stop.png")))
